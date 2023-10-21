@@ -8,8 +8,6 @@ const handler = async (request, response) => {
     // await PlayerData.create({ name, amount});
     // return NextResponse.json({message: 'Player Added'}, {status: 201})
 
-    
-
     if (request.method === 'POST') {
         const database = await connectMongoDB();
         const playerData = request.body;
@@ -23,13 +21,16 @@ const handler = async (request, response) => {
         }
     } 
     
-    // if (request.method === 'GET') {
-    //     const database = await connectMongoDB();
-    //     const getPlayerData = database.collection('playerdatas');
-    //     console.log(database)
-    //     const data = await getPlayerData.find({}).toArray();
-    //     response.status(200).json(data);
-    // }
+    if (request.method === 'GET') {
+        try {
+            // Fetch data from MongoDB collection
+            const data = await PlayerData.find();
+            response.status(200).json(data);
+        } catch (error) {
+            console.error('An error occurred', error);
+            response.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
 
 }
 
