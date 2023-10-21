@@ -1,63 +1,53 @@
-import { Divider, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
-const Leaderboard = () => {
+const Leaderboard = ({ data }) => {
+  const [userData, setUserData] = useState();
 
-    let currIndex = -1;
+  //   const styleObject = {
+  //     0: "gold",
+  //     1: "silver",
+  //     2: "#E97451",
+  //   };
 
-    // This is created after sorting the data
-    const fakeData = [
-        {
-            name: 'Jimmy',
-            amount: 1000
-        },
-        {
-            name: 'Alex',
-            amount: 500
-        },
-        {
-            name: 'Michael',
-            amount: -1000
-        },
-        {
-            name: 'JT',
-            amount: -1000
-        }
-    ]
+  //   const determineStyle = (amount) => {
+  //     if (amount > 0) {
+  //       return "green";
+  //     } else if (amount < 0) {
+  //       return "red";
+  //     } else {
+  //       return "gray";
+  //     }
+  //   };
 
-    const styleObject = {
-        0: 'gold',
-        1: 'silver',
-        2: '#E97451'
-    }
+  useEffect(() => {
+    let filteredData = [];
+    data.map((entries) => {
+      filteredData.push({
+        [entries.name]: entries.amount,
+      });
+    });
+    setUserData(filteredData);
+  }, []);
 
-    const determineStyle = (amount) => {
-        if (amount > 0){
-            return 'green'
-        } else if (amount < 0) {
-            return 'red'
-        } else {
-            return ('gray')
-        }
-    }
+  //   useEffect(() => {
+  //     console.log(userData);
+  //   }, [userData]);
 
-    return (
-        <Stack spacing={3} border={'solid 1px'} p={'2rem'}>
-            <Heading>Leaderboard</Heading>
-            <Divider />
-            {fakeData.map(obj => {
-
-                // console.log('Current Index: ' + currIndex);
-                currIndex += 1;
-                
-                return (
-                    <Flex key={obj.name} justify={'space-between'}>
-                        <Text bgColor={styleObject[currIndex]}>{obj.name}</Text>
-                        <Text color={determineStyle(obj.amount)}>{obj.amount}</Text>
-                    </Flex>
-                )
-            })}
-        </Stack>
-    )
-}
+  return (
+    <Stack spacing={3} border={"solid 1px"} p={"2rem"}>
+      <Heading>Leaderboard</Heading>
+      <Divider />
+      {data.map((entries, key) => {
+        return (
+          <Flex key={key} w={"100%"} justifyContent={"space-between"}>
+            <Text>{entries.name}</Text>
+            <Text>{entries.amount}</Text>
+          </Flex>
+        );
+      })}
+    </Stack>
+  );
+};
 
 export default Leaderboard;
