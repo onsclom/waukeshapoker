@@ -35,7 +35,7 @@ const Leaderboard = ({ data }) => {
   //   }, [userData]);
 
   return (
-    <Stack spacing={3} border={"solid 1px"} p={"2rem"}>
+    <Stack spacing={3} border={"solid 1px"} borderRadius={10} p={"2rem"}>
       <Heading>Leaderboard</Heading>
       <Divider />
       {data.map((entries, key) => {
