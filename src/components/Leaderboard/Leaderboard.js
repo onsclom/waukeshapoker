@@ -28,24 +28,27 @@ const Leaderboard = ({ data }) => {
       });
     });
     setUserData(filteredData);
-  }, []);
+  }, [data]);
 
   //   useEffect(() => {
   //     console.log(userData);
   //   }, [userData]);
 
   return (
-    <Stack spacing={3} border={"solid 1px"} borderRadius={10} p={"2rem"}>
-      <Heading>Leaderboard</Heading>
+    <Stack spacing={3} p={"1rem"} h={300}>
+      <Heading textAlign={"center"}>Leaderboard</Heading>
       <Divider />
-      {data.map((entries, key) => {
-        return (
-          <Flex key={key} w={"100%"} justifyContent={"space-between"}>
-            <Text>{entries.name}</Text>
-            <Text>{entries.amount}</Text>
-          </Flex>
-        );
-      })}
+      <Box overflowY={"scroll"} h={"80%"} p={"1rem"} border={"solid 1px black"}>
+        {data.map((entries, key) => {
+          return (
+            <Flex key={key} w={"100%"} justifyContent={"space-between"}>
+              <Text>{entries.name}</Text>
+              <Text>{entries.amount}</Text>
+            </Flex>
+          );
+        })}
+        {data.length === 0 && <Text>No Data</Text>}
+      </Box>
     </Stack>
   );
 };

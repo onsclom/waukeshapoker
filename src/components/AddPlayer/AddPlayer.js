@@ -80,13 +80,7 @@ const AddPlayer = (isLoading) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack
-        spacing={6}
-        border={"solid 1px"}
-        borderRadius={10}
-        p={"2rem"}
-        w={"300px"}
-      >
+      <Stack spacing={6} p={"1rem"}>
         {/* Heading */}
         <Center>
           <Heading>Add Player</Heading>

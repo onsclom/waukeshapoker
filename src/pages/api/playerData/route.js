@@ -3,9 +3,10 @@ import PlayerData from "../../../../lib/models/playerData";
 // import { NextResponse } from "next/server";
 
 const handler = async (request, response) => {
+  // POST REQUEST
   if (request.method === "POST") {
-    const playerData = request.body;
-    const player = new PlayerData(playerData);
+    const newPlayerData = request.body;
+    const player = new PlayerData(newPlayerData);
 
     try {
       await player.save();
@@ -15,6 +16,7 @@ const handler = async (request, response) => {
     }
   }
 
+  // GET REQUEST
   if (request.method === "GET") {
     try {
       // Connect to the MongoDB database

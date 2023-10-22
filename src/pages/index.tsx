@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { Flex } from "@chakra-ui/react";
+import {
+  Flex,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from "@chakra-ui/react";
 
 import AddPlayer from "@/components/AddPlayer/AddPlayer";
 import Invested from "@/components/Invested/Invested";
@@ -27,16 +34,40 @@ const Home: NextPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <Flex w={"70%"} justify={"space-evenly"}>
       {isLoading && <LoadingSpinner />}
-      <AddPlayer isLoading={isLoading} />
-      <Invested data={data} />
-      <Leaderboard data={data} />
+      <Tabs
+        variant="enclosed"
+        h={400}
+        w={400}
+        border={"solid 3px white"}
+        borderRadius={"10px"}
+        bgColor={"white"}
+        p={"1rem"}
+      >
+        <TabList borderColor={"black"}>
+          <Tab>Add</Tab>
+          <Tab>Invested</Tab>
+          <Tab>Leaderboard</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <AddPlayer isLoading={isLoading} />
+          </TabPanel>
+          <TabPanel>
+            <Invested data={data} />
+          </TabPanel>
+          <TabPanel>
+            <Leaderboard data={data} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Flex>
   );
 };

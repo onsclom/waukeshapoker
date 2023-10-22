@@ -15,13 +15,7 @@ const Invested = ({ data }) => {
   }, []);
 
   return (
-    <Stack
-      spacing={6}
-      border={"solid 1px"}
-      borderRadius={10}
-      p={"2rem"}
-      m={"0 1rem"}
-    >
+    <Stack spacing={6} p={"1rem"} w={"100%"}>
       <Heading textAlign={"center"}>Amount Invested</Heading>
       <Divider />
       <Center>
