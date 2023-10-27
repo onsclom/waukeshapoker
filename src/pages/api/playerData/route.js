@@ -7,12 +7,26 @@ const handler = async (request, response) => {
   if (request.method === "POST") {
     const newPlayerData = request.body;
     const player = new PlayerData(newPlayerData);
+    const { name, amount } = player;
 
     try {
-      await player.save();
-      response.status(201).json({ message: "Player data saved." });
+      //if player.name exists, add player.value
+      const existingPlayer = await PlayerData.findOne({ name: name });
+
+      if (existingPlayer.name === name) {
+        // If the name exists, update the amount
+        await PlayerData.updateOne(
+          // { name: name },
+          { $set: { amount: existingPlayer.amount + amount } }
+        );
+        response.json({ message: "Amount updated" });
+      } else {
+        await player.save();
+        response.status(201).json({ message: "Player added." });
+      }
     } catch (error) {
       response.status(500).json({ message: "Error inserting player data" });
+      console.error(error);
     }
   }
 
