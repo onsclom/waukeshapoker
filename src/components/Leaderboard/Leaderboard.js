@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const Leaderboard = ({ data }) => {
   const [userData, setUserData] = useState();
+  const [totalInvested, setTotalInvested] = useState(0);
 
   //   const styleObject = {
   //     0: "gold",
@@ -20,7 +21,7 @@ const Leaderboard = ({ data }) => {
   //     }
   //   };
 
-  useEffect(() => {
+  function filterData() {
     let filteredData = [];
     data.map((entries) => {
       filteredData.push({
@@ -28,17 +29,31 @@ const Leaderboard = ({ data }) => {
       });
     });
     setUserData(filteredData);
-  }, [data]);
+  }
 
-  //   useEffect(() => {
-  //     console.log(userData);
-  //   }, [userData]);
+  function addMoney() {
+    data.map((entries) => {
+      setTotalInvested(
+        (prevTotalInvested) => prevTotalInvested + entries.amount
+      );
+    });
+  }
+
+  useEffect(() => {
+    filterData();
+    addMoney();
+  }, [data]);
 
   return (
     <Stack spacing={3} p={"1rem"} h={300}>
       <Heading textAlign={"center"}>Leaderboard</Heading>
       <Divider />
       <Box overflowY={"scroll"} h={"80%"} p={"1rem"} border={"solid 1px black"}>
+        <Flex justify={"space-between"}>
+          <Text>Total:</Text>
+          <Text>{totalInvested}</Text>
+        </Flex>
+        <Divider />
         {data.map((entries, key) => {
           return (
             <Flex key={key} w={"100%"} justifyContent={"space-between"}>
