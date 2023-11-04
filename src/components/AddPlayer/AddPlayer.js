@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import {
   Button,
@@ -11,17 +12,19 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 
-const AddPlayer = (isLoading) => {
-  const toast = useToast();
+const AddPlayer = () => {
   const [loading, setLoading] = useState(false);
-
   const { handleSubmit, register, reset } = useForm();
 
+  const toast = useToast();
+
   const onSubmit = async (playerData) => {
+    // If Name and Amount are filled out, try to post the data
     if (playerData.name && playerData.amount) {
+      // Signifies loading so you know the request is acting
       setLoading(true);
+      // Try to make the post request
       try {
         const response = await fetch("/api/playerData/route", {
           method: "POST",
@@ -40,6 +43,7 @@ const AddPlayer = (isLoading) => {
             isClosable: true,
             position: "top",
           });
+          setTimeout(location.reload(), 500);
         } else {
           // Handle error response
           toast({
