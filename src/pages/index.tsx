@@ -30,7 +30,6 @@ const Home: NextPage = () => {
         console.error("An error occurred", error);
       }
     };
-
     fetchData();
   }, []);
 
