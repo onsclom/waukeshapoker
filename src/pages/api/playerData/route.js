@@ -15,7 +15,7 @@ const handler = async (request, response) => {
       if (existingPlayer) {
         // If the name exists, update the amount
         await PlayerData.updateOne(
-          // { name: name },
+          { name: player.name },
           { $set: { amount: existingPlayer.amount + player.amount } }
         );
         response.status(202).json({ message: "Amount updated" });
