@@ -42,6 +42,15 @@ const handler = async (request, response) => {
       response.status(500).json({ message: "Error retrieving player data" });
     }
   }
+
+  if (request.method === "DELETE") {
+    try {
+      await PlayerData.deleteMany({});
+      response.status(203).json({ message: "Database Cleared." });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };
 
 export default handler;
