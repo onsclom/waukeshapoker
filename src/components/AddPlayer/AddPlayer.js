@@ -43,7 +43,7 @@ const AddPlayer = () => {
             isClosable: true,
             position: "top",
           });
-          setTimeout(location.reload(), 500);
+          setTimeout(location.reload(), 1000);
         } else {
           // Handle error response
           toast({
