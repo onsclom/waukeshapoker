@@ -6,8 +6,11 @@ const handler = async (request, response) => {
   // POST REQUEST
   if (request.method === "POST") {
     const newPlayerData = request.body;
+    const processedName = request.body.name
+      .trim()
+      .replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1));
+    newPlayerData.name = processedName;
     const player = new PlayerData(newPlayerData);
-
     try {
       //if player.name exists, add player.value
       const existingPlayer = await PlayerData.findOne({ name: player.name });
