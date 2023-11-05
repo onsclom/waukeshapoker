@@ -1,34 +1,41 @@
-import { Box, Divider, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-const Leaderboard = ({ data }) => {
-  const [userData, setUserData] = useState();
+const Leaderboard = () => {
   const [totalInvested, setTotalInvested] = useState(0);
+  const [data, setData] = useState([]);
+  const API_URL = "/api/playerData/route";
 
-  //   const styleObject = {
-  //     0: "gold",
-  //     1: "silver",
-  //     2: "#E97451",
-  //   };
+  async function fetchData() {
+    try {
+      const response = await fetch(API_URL);
+      if (response.ok) {
+        const jsonData = await response.json();
+        setData(jsonData);
+      }
+    } catch (error) {
+      console.error("An error occurred", error);
+    }
+  }
 
-  //   const determineStyle = (amount) => {
-  //     if (amount > 0) {
-  //       return "green";
-  //     } else if (amount < 0) {
-  //       return "red";
-  //     } else {
-  //       return "gray";
-  //     }
-  //   };
-
-  function filterData() {
-    let filteredData = [];
-    data.map((entries) => {
-      filteredData.push({
-        [entries.name]: entries.amount,
+  async function deleteData() {
+    try {
+      await fetch(API_URL, {
+        method: "DELETE",
       });
-    });
-    setUserData(filteredData);
+      setData([]);
+      setTotalInvested(0);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function addMoney() {
@@ -40,7 +47,10 @@ const Leaderboard = ({ data }) => {
   }
 
   useEffect(() => {
-    filterData();
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     addMoney();
   }, [data]);
 
@@ -64,6 +74,7 @@ const Leaderboard = ({ data }) => {
         })}
         {data.length === 0 && <Text>No Data</Text>}
       </Box>
+      <Button onClick={deleteData}>Delete</Button>
     </Stack>
   );
 };
