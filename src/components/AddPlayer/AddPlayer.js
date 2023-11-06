@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react"
+import { useForm } from "react-hook-form"
 
 import {
   Button,
@@ -11,19 +11,21 @@ import {
   Stack,
   Text,
   useToast,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"
+import { usePlayerDataContext } from "@/context/dataContext"
 
 const AddPlayer = () => {
-  const [loading, setLoading] = useState(false);
-  const { handleSubmit, register, reset } = useForm();
+  const [loading, setLoading] = useState(false)
+  const { handleSubmit, register, reset } = useForm()
+  const { incBuyinNumber } = usePlayerDataContext()
 
-  const toast = useToast();
+  const toast = useToast()
 
   const onSubmit = async (playerData) => {
     // If Name and Amount are filled out, try to post the data
     if (playerData.name && playerData.amount) {
       // Signifies loading so you know the request is acting
-      setLoading(true);
+      setLoading(true)
       // Try to make the post request
       try {
         const response = await fetch("/api/playerData/route", {
@@ -32,7 +34,7 @@ const AddPlayer = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(playerData),
-        });
+        })
 
         if (response.ok) {
           // Handle successful response
@@ -42,8 +44,9 @@ const AddPlayer = () => {
             duration: 2000,
             isClosable: true,
             position: "top",
-          });
-          setTimeout(location.reload(), 1000);
+          })
+          incBuyinNumber()
+          // setTimeout(location.reload(), 1000);
         } else {
           // Handle error response
           toast({
@@ -52,13 +55,13 @@ const AddPlayer = () => {
             duration: 2000,
             isClosable: true,
             position: "top",
-          });
+          })
         }
       } catch (error) {
         // Handle network or other errors
-        console.log(error);
+        console.log(error)
       }
-      setLoading(false);
+      setLoading(false)
     } else {
       toast({
         title: "Missing Fields",
@@ -67,20 +70,20 @@ const AddPlayer = () => {
         duration: 2000,
         isClosable: true,
         position: "top",
-      });
+      })
     }
-  };
+  }
 
   const handleClick = () => {
-    reset();
+    reset()
     toast({
       title: "Fields Reset",
       status: "success",
       duration: 2000,
       isClosable: true,
       position: "top",
-    });
-  };
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -118,7 +121,7 @@ const AddPlayer = () => {
         </Flex>
       </Stack>
     </form>
-  );
-};
+  )
+}
 
-export default AddPlayer;
+export default AddPlayer

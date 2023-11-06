@@ -1,25 +1,26 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react"
 
-const PlayerDataContext = createContext();
+const PlayerDataContext = createContext()
 
 export const PlayerDataContextProvider = ({ children }) => {
   // Define variables and functions that you want to share
   const [playerData, setPlayerData] = useState([
     { name: "No data available.", amount: 0 },
-  ]);
-  const [totalInvested, setTotalInvested] = useState(0);
-  const API_URL = "/api/playerData/route";
+  ])
+  const [totalInvested, setTotalInvested] = useState(0)
+  const [buyInNumber, setBuyInNumber] = useState(0)
+  const API_URL = "/api/playerData/route"
 
   // Create a function to update playerData
   async function fetchData() {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL)
       if (response.ok) {
-        const jsonData = await response.json();
-        setPlayerData(jsonData);
+        const jsonData = await response.json()
+        setPlayerData(jsonData)
       }
     } catch (error) {
-      console.error("An error occurred", error);
+      console.error("An error occurred", error)
     }
   }
 
@@ -27,20 +28,24 @@ export const PlayerDataContextProvider = ({ children }) => {
     playerData.map((entries) => {
       setTotalInvested(
         (prevTotalInvested) => prevTotalInvested + entries.amount
-      );
-    });
+      )
+    })
   }
 
   async function deleteData() {
     try {
       await fetch(API_URL, {
         method: "DELETE",
-      });
-      setPlayerData([]);
-      setTotalInvested(0);
+      })
+      setPlayerData([])
+      setTotalInvested(0)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
+  }
+
+  function incBuyinNumber() {
+    setBuyInNumber((prevBuyInNumber) => prevBuyInNumber + 1)
   }
 
   return (
@@ -51,13 +56,15 @@ export const PlayerDataContextProvider = ({ children }) => {
         playerData,
         deleteData,
         totalInvested,
+        incBuyinNumber,
+        buyInNumber,
       }}
     >
       {children}
     </PlayerDataContext.Provider>
-  );
-};
+  )
+}
 
 export const usePlayerDataContext = () => {
-  return useContext(PlayerDataContext);
-};
+  return useContext(PlayerDataContext)
+}

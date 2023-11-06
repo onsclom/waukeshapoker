@@ -1,16 +1,9 @@
-import type { NextPage } from "next";
+import type { NextPage } from "next"
 
-import {
-  Flex,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-} from "@chakra-ui/react";
+import { Flex, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react"
 
-import AddPlayer from "@/components/AddPlayer/AddPlayer";
-import Leaderboard from "@/components/Leaderboard/Leaderboard";
+import AddPlayer from "@/components/AddPlayer/AddPlayer"
+import Leaderboard from "@/components/Leaderboard/Leaderboard"
 
 const Home: NextPage = () => {
   return (
@@ -40,7 +33,7 @@ const Home: NextPage = () => {
         </TabPanels>
       </Tabs>
     </Flex>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
