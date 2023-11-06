@@ -36,7 +36,7 @@ export const PlayerDataContextProvider = ({ children }) => {
       await fetch(API_URL, {
         method: "DELETE",
       });
-      setData([]);
+      setPlayerData([]);
       setTotalInvested(0);
     } catch (error) {
       console.error(error);
